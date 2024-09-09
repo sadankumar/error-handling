@@ -28,6 +28,8 @@ public enum ErrorCode {
 
 2. Create a Custom Exception Class
 Create a custom exception class that wraps the error code and message. This class can be used to throw specific exceptions with detailed information.
+
+
 public class CustomServiceException extends Exception {
     private final ErrorCode errorCode;
 
@@ -45,8 +47,11 @@ public class CustomServiceException extends Exception {
         return errorCode;
     }
 }
+
+
 3. Handle Exceptions and Map to Error Codes
 In your service, where you make the RPC call or any dependent operation, handle exceptions and throw a CustomServiceException with the appropriate error code.
+
 
 public String callServiceAndHandleException() {
     try {
@@ -73,8 +78,10 @@ Here’s how you can handle the response for a web-based or RPC-based service:
 
 For HTTP Response Handling:
 If the service is using servlets or a basic HTTP response handler:
-import javax.servlet.http.HttpServletResponse;
 
+
+
+import javax.servlet.http.HttpServletResponse;
 public void handleRequest(HttpServletRequest request, HttpServletResponse response) {
     try {
         String result = callServiceAndHandleException();
@@ -114,10 +121,13 @@ private String createErrorResponseJson(ErrorCode errorCode) {
             errorCode.getCode(), errorCode.getMessage());
 }
 
+
 5. Integrate with RPC Response Mechanism
 If your service is using a legacy RPC protocol (e.g., Java RMI, CORBA), you will need to handle errors based on that specific protocol's mechanism.
 
 For example, if using Java RMI:
+
+
 
 public String callRemoteService() throws RemoteException {
     try {
@@ -139,6 +149,8 @@ The client-side application (UI or another service) needs to handle and display 
 
 For example, a web client might have a JavaScript handler to interpret and display the error:
 
+
+
 function handleServiceResponse(response) {
     if (!response.ok) {
         response.json().then(error => {
@@ -156,9 +168,7 @@ function handleServiceResponse(response) {
 Ensure that your Java service logs all errors, especially when exceptions are caught and error codes are generated. This will help in debugging and monitoring the service's health:
 
 import java.util.logging.Logger;
-
 private static final Logger logger = Logger.getLogger(MyService.class.getName());
-
 try {
     String response = callServiceAndHandleException();
     // normal processing
